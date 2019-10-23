@@ -26,7 +26,7 @@ namespace Test
                 x[i] = A + i * STEP;
                 y[i] = f.Invoke(x[i]);
             }
-           
+
             /** 
              * 
              * Цей код потрібно розкоментувати, коли ви створити клас, 
@@ -39,10 +39,10 @@ namespace Test
              * 
              */
             // IEstimationMethod method = new НАЗВА_КЛАСУ();
-            // Func<double, double> approximated = method.estimate(x, y);
+            // Func<double, double> estimatedFunction = method.estimate(x, y);
             // for(double var = -10; var < 10; var += 0.05f)
             // {
-            //     Console.WriteLine("f(" + var + ") = " + approximated.Invoke(var));
+            //     Console.WriteLine("f(" + var + ") = " + estimatedFunction.Invoke(var));
             // }
         }
     }

@@ -12,9 +12,11 @@ namespace Test
             const double B = 5;
 
             const int N = (int)((B - A) / STEP); // кількість вузлів згідно з нашого діапазону і кроку
+
             // Створюємо два масиви для вузлів
             double[] x = new double[N];
             double[] y = new double[N];
+
 
             // Функція, яку будемо апроксимувати/інтерполювати для тесту
             Func<double, double> f = x => 2 * Math.Cos(x);
@@ -26,13 +28,23 @@ namespace Test
                 y[i] = f.Invoke(x[i]);
             }
 
-            IEstimationMethod method = new Linear_LSM();
-            Func<double, double> estimatedFunction = method.estimate(x, y);
-            for (double var = 0; var < 5; var += 0.05f)
-            {
-                Console.WriteLine("f(" + var + ")  = " + f.Invoke(var) + 
-                    "\t|  fa(" + var + ") = " + estimatedFunction.Invoke(var));
-            }
+            /** 
+             * 
+             * Цей код потрібно розкоментувати, коли ви створити клас, 
+             * що буде реалізовувати інтерфейс IEstimationMethod.
+             * На місце НАЗВА_КЛАСУ потрібно підставити назву класу, що ви створили.
+             * Якщо конструктор вашого класу приймає якісь вхідні параметри, наприклад діапазон,
+             * то тут їх можна передати. 
+             * Якщо завдання виконане правильно, то результат має бути відповідним.
+             * В змінній approximated буде лежати функція, яка є результатом апроксимації або інтерполяції.
+             * 
+             */
+            // IEstimationMethod method = new НАЗВА_КЛАСУ();
+            // Func<double, double> estimatedFunction = method.estimate(x, y);
+            // for(double var = -10; var < 10; var += 0.05f)
+            // {
+            //     Console.WriteLine("f(" + var + ") = " + estimatedFunction.Invoke(var));
+            // }
         }
     }
 }

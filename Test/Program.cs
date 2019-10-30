@@ -22,8 +22,7 @@ namespace Test
             Func<double, double> f = x => 2 * Math.Cos(x);
 
             // Наповнюємо масиви значеннями вузлів для подальшого використання в якості вхідних данних
-            for (int i = 0; i < x.Length; i++)
-            {
+            for(int i = 0; i < x.Length; i ++) {
                 x[i] = A + i * STEP;
                 y[i] = f.Invoke(x[i]);
             }

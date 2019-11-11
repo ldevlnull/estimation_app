@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Test
 {
@@ -27,24 +29,49 @@ namespace Test
                 y[i] = f(x[i]);
             }
 
-            /** 
+     
+
+            /*
              * 
-             * Цей код потрібно розкоментувати, коли ви створити клас, 
-             * що буде реалізовувати інтерфейс IEstimationMethod.
-             * На місце НАЗВА_КЛАСУ потрібно підставити назву класу, що ви створили.
-             * Якщо конструктор вашого класу приймає якісь вхідні параметри, наприклад діапазон,
-             * то тут їх можна передати. 
-             * Якщо завдання виконане правильно, то результат має бути відповідним.
-             * В змінній approximated буде лежати функція, яка є результатом апроксимації або інтерполяції.
+             * Щоб відтестувати метод, який ви реалізували,
+             * просто додайте екземпляр його класу до масиву methods
+             * і можете запускати цей клас.
+             * 
+             * Після тесту ви побачите результати і середню помилку метода.
+             * Якщо вона відносно мала, значить все працює правильно.
              * 
              */
 
-            //IEstimationMethod method = new LagrangePolynomial();
-            //Func<double, double> estimatedFunction = method.estimate(x, y);
-            //for(double var = 1; var < 4; var += 0.01f)
-            //{
-            //    Console.WriteLine($"f({ var }) = { estimatedFunction(var) }  [{ Math.Abs(estimatedFunction(var) - f(var)) }]");
-            //}
+            IEstimationMethod[] methods = {
+                new LagrangePolynomial(),
+                new Linear_LSM(),
+                new NewtonInterpolation()
+            };
+
+            Dictionary<IEstimationMethod, double> errors = new Dictionary<IEstimationMethod, double>();
+
+            
+            // Параметри для тесту, їх можна поміняти, щоб подивитись, як працює функція. 
+            double testingStep = 0.001f; // крок змінної при інтерполюванні
+            double testingA = 1; // ліва межа інтерполювання функції
+            double testingB = 4; // права межа інтерполювання функції
+
+            foreach (IEstimationMethod method in methods)
+            {
+                double avg = 0;
+                Func<double, double> estimatedFunction = method.estimate(x, y);
+                for (double var = testingA; var < testingB; var += testingStep)
+                {
+                    Console.WriteLine($"f({ var }) = { estimatedFunction(var) }  [{ Math.Abs(estimatedFunction(var) - f(var)) }]");
+                    avg += Math.Abs(estimatedFunction(var) - f(var));
+                }
+                errors.Add(method, avg / ((testingB - testingA) / testingStep));
+                Console.WriteLine("\n\n ===== END OF METHOD ===== \n\n");
+            }
+            foreach(KeyValuePair<IEstimationMethod, double> kvp in errors)
+            {
+                Console.WriteLine(String.Format("{0, -40}", $"Average error of {kvp.Key}") + $"\t=\t{kvp.Value}");
+            }
         }
     }
 }

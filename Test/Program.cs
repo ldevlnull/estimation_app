@@ -24,7 +24,7 @@ namespace Test
             // Наповнюємо масиви значеннями вузлів для подальшого використання в якості вхідних данних
             for(int i = 0; i < x.Length; i ++) {
                 x[i] = A + i * STEP;
-                y[i] = f.Invoke(x[i]);
+                y[i] = f(x[i]);
             }
 
             /** 
@@ -38,12 +38,13 @@ namespace Test
              * В змінній approximated буде лежати функція, яка є результатом апроксимації або інтерполяції.
              * 
              */
-            // IEstimationMethod method = new НАЗВА_КЛАСУ();
-            // Func<double, double> estimatedFunction = method.estimate(x, y);
-            // for(double var = -10; var < 10; var += 0.05f)
-            // {
-            //     Console.WriteLine("f(" + var + ") = " + estimatedFunction.Invoke(var));
-            // }
+
+            //IEstimationMethod method = new LagrangePolynomial();
+            //Func<double, double> estimatedFunction = method.estimate(x, y);
+            //for(double var = 1; var < 4; var += 0.01f)
+            //{
+            //    Console.WriteLine($"f({ var }) = { estimatedFunction(var) }  [{ Math.Abs(estimatedFunction(var) - f(var)) }]");
+            //}
         }
     }
 }

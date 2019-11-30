@@ -35,7 +35,7 @@ namespace Test
 
         private int DegreeNum(int n)
         { 
-           return  (n % 2) ?  -1 :  1;
+           return  (n % 2 == 1) ?  -1 :  1;
         }
 
         private double deltaF(int n)

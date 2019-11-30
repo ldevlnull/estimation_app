@@ -16,13 +16,7 @@ namespace Test
             X = x;
             Y = y;
 
-            double t = 0;
-            double ht = 1 / n;
-            for (int j = 0; j <= n* n; j++)
-            {
-                //  t, FactorialApp(n, t));
-                t = t + ht;
-            }
+            return x => FactorialAppr(n, x);
            }
 
         private double factorial(int k)
@@ -40,15 +34,8 @@ namespace Test
         }
 
         private int DegreeNum(int n)
-        {
-            if (n % 2)
-            {
-                return -1;
-            }
-            else
-            {
-                return 1;
-            }
+        { 
+           return  (n % 2) ?  -1 :  1;
         }
 
         private double deltaF(int n)

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace Test
+namespace gui
 {
     class LagrangePolynomial : IEstimationMethod
     {
-        public Func<double, double> estimate(double[] x, double[] y)
+        public Func<double, double> Estimate(double[] x, double[] y)
         {
             return X =>
             {

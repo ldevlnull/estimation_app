@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Test
+namespace gui
 {
     interface IEstimationMethod
     {
-        public Func<double, double> estimate(double[] x, double[] y); 
+        Func<double, double> Estimate(double[] x, double[] y); 
     }
 }

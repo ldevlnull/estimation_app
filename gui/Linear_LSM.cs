@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Test
+namespace gui
 {
     class Linear_LSM : IEstimationMethod
     {
-        public Func<double, double> estimate(double[] X, double[] Y)
+        public Func<double, double> Estimate(double[] X, double[] Y)
         {
             int m = get_m(X, Y); // int m = 12
             double[] C = new double[m];

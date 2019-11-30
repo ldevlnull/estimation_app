@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Test
+namespace gui
 {
     class NewtonInterpolation : IEstimationMethod
     {
         private double[] X;
         private double[] Y;
 
-        public Func<double, double> estimate(double[] x, double[] y)
+        public Func<double, double> Estimate(double[] x, double[] y)
         {
             X = x;
             Y = y;

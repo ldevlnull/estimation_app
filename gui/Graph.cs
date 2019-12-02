@@ -55,6 +55,7 @@ namespace gui
             pbWidth = ApproximationGraph.Width;
             gest = ApproximationGraph.CreateGraphics();
             gest.Clear(Color.White);
+            gerr = ErrorGraph.CreateGraphics();
             gerr.Clear(Color.White);
 
             GetGraphEstimatedArray();

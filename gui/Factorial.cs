@@ -10,14 +10,13 @@ namespace gui
     {
         private double[] X;
         private double[] Y;
-        private int n { get; set; }
 
         public Func<double, double> estimate(double[] x, double[] y)
         {
             X = x;
             Y = y;
 
-            return x => FactorialAppr(n, x);
+            return x => FactorialAppr(X.Length - 1, x);
         }
 
         private double factorial(int k)
@@ -53,20 +52,12 @@ namespace gui
         private double factMN(double t, int k)
         {
             double mn = 1;
-            int i;
-            if (k == 0)
-            {
-                mn = 1;
-            }
-            else
-            {
-                for (i = 0; i < k; i++)
-                {
+            if (k != 0)
+                for (int i = 0; i < k; i++)
                     mn *= (t - i);
-                }
-            }
             return mn;
         }
+
         private double FactorialAppr(int n, double t)
         {
             int k;

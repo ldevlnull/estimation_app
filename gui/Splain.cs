@@ -36,10 +36,10 @@ namespace gui
             a[N - 1] = y[N - 2];
             b[N - 1] = (y[N - 1] - y[N - 2]) / h[N - 1] - (2.0 / 3.0) * h[N - 1] * c[N - 1];
             d[N - 1] = -c[N - 1] / (3 * h[N - 1]);
-            return new Func<double, double>(z => {
+            return z => {
                 if (z < x.Min() || z > x.Max())
                     throw new IndexOutOfRangeException();
-                double minX = x.Where(k => z < k).OrderBy(c => c).FirstOrDefault();
+                double minX = x.Min();
                 int index = 0;
                 double diff = z - minX;
                 for (int i = 0; i < x.Length; i++)
@@ -51,11 +51,11 @@ namespace gui
                     }
                 }
                 return a[index + 1] + b[index + 1] * diff + c[index + 1] * Math.Pow(diff, 2) + d[index + 1] * Math.Pow(diff, 3);
-            });
+            };
         }
 
 
-        double[] TridiagonalSolve(double[] y, double[] h)
+       private double[] TridiagonalSolve(double[] y, double[] h)
         {
             int i = 1;
             int N = y.Length;

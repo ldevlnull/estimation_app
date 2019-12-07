@@ -11,9 +11,10 @@ namespace gui
     class Graph : IGraph
     {
         public void Build(PictureBox ApproximationGraph, PictureBox ErrorGraph,
-            double LeftBorder, double RightBorder, int PointAmount,
+            double LeftBorder, double RightBorder, int PointAmount, int GeneratedPointAmount,
             Func<double, double> EstimatedFunc, Func<double, double> AnalyticFunc)
         {
+            NGen = GeneratedPointAmount;
             NEst = PointAmount;
             lBorder = LeftBorder;
             rBorder = RightBorder;
@@ -27,7 +28,8 @@ namespace gui
             gerr = ErrorGraph.CreateGraphics();
             gerr.Clear(Color.White);
 
-            GetGraphEstimatedArray();
+            GetGraphArray(out XGen, out YGen, NGen, analyticFunc);
+            GetGraphArray(out XEst, out YEst, NEst, estimatedFunc);
             GetGraphErrorArray();
             GetCoeffEstimated();
             GetCoeffError();
@@ -35,6 +37,9 @@ namespace gui
             DrawWeb(gest, Kx, Ky, Zx, Zy, Gx, Gy);
             DrawWeb(gerr, Kx, Kye, Zx, Zye, Gx, Gye);
 
+            for (int i = 0; i < NGen; i++)
+                gest.DrawEllipse(pen5, (float)Math.Round(Kx * XGen[i] + Zx, 4),
+                    (float)Math.Round(Ky * YGen[i] + Zy, 4), 5, 5);
             for (int i = 1; i < NEst; i++)
                 gest.DrawLine(pen4, (float)(Kx * XEst[i - 1] + Zx), (float)(Ky * YEst[i - 1] + Zy),
                     (float)(Kx * XEst[i] + Zx), Convert.ToInt32(Ky * YEst[i] + Zy));
@@ -44,8 +49,11 @@ namespace gui
         }
         public void Build(PictureBox ApproximationGraph, PictureBox ErrorGraph,
             double LeftBorder, double RightBorder, int PointAmount,
-            Func<double, double> EstimatedFunc)
+            Func<double, double> EstimatedFunc, double[] GeneratedX, double[] GeneratedY)
         {
+            XGen = GeneratedX;
+            YGen = GeneratedY;
+            NGen = XGen.Length;
             NEst = PointAmount;
             lBorder = LeftBorder;
             rBorder = RightBorder;
@@ -58,11 +66,14 @@ namespace gui
             gerr = ErrorGraph.CreateGraphics();
             gerr.Clear(Color.White);
 
-            GetGraphEstimatedArray();
+            GetGraphArray(out XEst, out YEst, NEst, estimatedFunc);
             GetCoeffEstimated();
 
             DrawWeb(gest, Kx, Ky, Zx, Zy, Gx, Gy);
 
+            for (int i = 0; i < NGen; i++)
+                gest.DrawEllipse(pen5, (float)Math.Round(Kx * XGen[i] + Zx, 4),
+                    (float)Math.Round(Ky * YGen[i] + Zy, 4), 5, 5);
             for (int i = 1; i < NEst; i++)
                 gest.DrawLine(pen4, (float)(Kx * XEst[i - 1] + Zx), (float)(Ky * YEst[i - 1] + Zy),
                     (float)(Kx * XEst[i] + Zx), Convert.ToInt32(Ky * YEst[i] + Zy));
@@ -73,14 +84,17 @@ namespace gui
         Pen pen2 = new Pen(Color.Red, (float)(2));
         Pen pen3 = new Pen(Color.Gray, (float)(1));
         Pen pen4 = new Pen(Color.Orange, (float)(2));
+        Pen pen5 = new Pen(Color.Green, (float)(2));
 
         Func<double, double> estimatedFunc;
         Func<double, double> analyticFunc;
 
         double lBorder, rBorder;
-        int NEst;
+        int NEst, NGen;
         double[] XEst;
         double[] YEst;
+        double[] XGen;
+        double[] YGen;
         double[] YErr;
 
         double Kx, Ky, Kye, Zx, Zy, Zye;
@@ -175,15 +189,15 @@ namespace gui
             g.DrawLine(pen2, L, (float)(ky * gy + zy), (float)(pbWidth - L), (float)(ky * gy + zy));
             g.DrawLine(pen2, (float)(kx * gx + zx), L, (float)(kx * gx + zx), (float)(pbHeight - L));
         }
-        void GetGraphEstimatedArray()
+        void GetGraphArray(out double[] X, out double[] Y, int N, Func<double, double> function)
         {
-            XEst = new double[NEst];
-            YEst = new double[NEst];
-            double step = (rBorder - lBorder) / NEst;
-            for (int i = 0; i < NEst; i++)
+            X = new double[N];
+            Y = new double[N];
+            double step = (rBorder - lBorder) / N;
+            for (int i = 0; i < N; i++)
             {
-                XEst[i] = lBorder + step * i;
-                YEst[i] = estimatedFunc(XEst[i]);
+                X[i] = lBorder + step * i;
+                Y[i] = function(X[i]);
             }
         }
         void GetGraphErrorArray()

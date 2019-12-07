@@ -11,9 +11,9 @@ namespace gui
     {
         void Build(PictureBox ApproximationGraph, PictureBox ErrorGraph,
             double LeftBorder, double RightBorder, int PointAmount,
-            Func<double, double> function);
+            Func<double, double> function, double[] GeneratedX, double[] GeneratedY);
         void Build(PictureBox ApproximationGraph, PictureBox ErrorGraph,
-            double LeftBorder, double RightBorder, int PointAmount,
+            double LeftBorder, double RightBorder, int PointAmount, int GeneratedPointAmount,
             Func<double, double> EstimatedFunction, Func<double, double> AnalyticFunction);
     }
 }

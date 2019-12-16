@@ -14,6 +14,9 @@ namespace gui
     {
         private bool SelectedInit = true;
         private bool ArePointsReady = false;
+        private bool ReadPointsFrom = false;
+
+        private string FileName;
 
         private double[] X;
         private double[] Y;
@@ -76,7 +79,16 @@ namespace gui
                     if(ArePointsReady)
                     {
                         Func<double, double> function = method.Estimate(X, Y);
-                        graph.Build(ApproximationGraphBox, ErrorGraphBox, function);
+                        if (ReadPointsFrom)
+                        {
+                            FileUtil.ReadCoords(out double[] x, out double[] y, FileName);
+                            graph.Build(ApproximationGraphBox, ErrorGraphBox, Convert.ToDouble(LeftBorderField.Text), Convert.ToDouble(RightBorderField.Text), Convert.ToInt32(PointsAmountField.Text), function, x, y);
+                        }
+                        else
+                        {
+                            // Something without files
+                            // graph.Build();
+                        }
                     } 
                     else
                     {
@@ -145,7 +157,17 @@ namespace gui
         // todo: implement reading of points from file
         private void ReadPointsFromFileButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            ReadPointsFrom = true;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                FileName = openFileDialog1.FileName;
+
+            ArePointsReady = true;
+        }
+
+        private void GeneratePointsRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            ReadPointsFrom = false;
         }
     }
 }

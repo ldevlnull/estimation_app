@@ -55,6 +55,7 @@
             this.ApproximationErrorLabel = new System.Windows.Forms.Label();
             this.SaveResultCheck = new System.Windows.Forms.CheckBox();
             this.ApproximateButton = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SettingsBox.SuspendLayout();
             this.PointsBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ApproximationGraphBox)).BeginInit();
@@ -266,6 +267,7 @@
             this.GeneratePointsRadio.TabIndex = 0;
             this.GeneratePointsRadio.Text = "Generate Points";
             this.GeneratePointsRadio.UseVisualStyleBackColor = true;
+            this.GeneratePointsRadio.CheckedChanged += new System.EventHandler(this.GeneratePointsRadio_CheckedChanged);
             // 
             // ApproximationGraphBox
             // 
@@ -325,6 +327,10 @@
             this.ApproximateButton.UseVisualStyleBackColor = true;
             this.ApproximateButton.Click += new System.EventHandler(this.ApproximateButton_Click);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -379,6 +385,7 @@
         private System.Windows.Forms.Label GeneratePointsAmoutLabel;
         private System.Windows.Forms.TextBox GeneratePointAmountField;
         private System.Windows.Forms.Button GenerateButton;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

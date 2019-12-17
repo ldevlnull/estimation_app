@@ -291,6 +291,8 @@
             // 
             // ApproximationGraphBox
             // 
+            this.ApproximationGraphBox.BackgroundImage = global::gui.Properties.Resources.white;
+            this.ApproximationGraphBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ApproximationGraphBox.Location = new System.Drawing.Point(310, 62);
             this.ApproximationGraphBox.Name = "ApproximationGraphBox";
             this.ApproximationGraphBox.Size = new System.Drawing.Size(850, 300);
@@ -299,6 +301,8 @@
             // 
             // ErrorGraphBox
             // 
+            this.ErrorGraphBox.BackgroundImage = global::gui.Properties.Resources.white;
+            this.ErrorGraphBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ErrorGraphBox.Location = new System.Drawing.Point(310, 411);
             this.ErrorGraphBox.Name = "ErrorGraphBox";
             this.ErrorGraphBox.Size = new System.Drawing.Size(850, 300);

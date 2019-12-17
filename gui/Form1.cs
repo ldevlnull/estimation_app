@@ -15,28 +15,38 @@ namespace gui
         private bool SelectedInit = true;
         private bool ArePointsReady = false;
         private bool ArePointsReadFromFile = false;
-        private bool ArePointsAnatytic = false;
+        private bool ArePointsAnalytic = false;
 
         private string FileName;
 
         private double[] X;
         private double[] Y;
 
-        private IGraph graph = new Graph(); 
+        private IGraph graph = new Graph();
+        Func<double, double> AnalyticFunction;
 
         private IEstimationMethod[] estimationMethods = {
             null,
-            new Splain(),  
-            new Factorial(), 
+            new Splain(),
+            new Factorial(),
             new LagrangePolynomial(),
             new Linear_LSM(),
             new NewtonInterpolation()
+        };
+
+        private Func<double, double>[] AnalyticFunctions = {
+            null,
+            x => 2 * Math.Cos(x),
+            x => Math.Sin(x),
+            x => Math.Exp(x),
+            x => 1 / (1 + x * x)
         };
 
         public MainWindow()
         {
             InitializeComponent();
             SelectMethodField.SelectedIndex = 0;
+            AnalyticFunctionsCombo.SelectedIndex = 0;
         }
 
         private void InputPointsRadio_CheckedChanged(object sender, EventArgs e)
@@ -70,16 +80,26 @@ namespace gui
             int Selected = SelectMethodField.SelectedIndex;
             if (ValidateInput())
             {
-                    IEstimationMethod method = estimationMethods[Selected];
-                    if (ArePointsReady)
+                IEstimationMethod method = estimationMethods[Selected];
+                if (ArePointsReady)
+                {
+                    if (ArePointsAnalytic)
+                    {
+                        Func<double, double> function = method.Estimate(X, Y);
+                        graph.Build(
+                            ApproximationGraphBox,
+                            ErrorGraphBox,
+                            Convert.ToDouble(LeftBorderField.Text),
+                            Convert.ToDouble(RightBorderField.Text),
+                            Convert.ToInt32(PointsAmountField.Text),
+                            Convert.ToInt32(GeneratePointAmountField.Text),
+                            function, AnalyticFunction
+                            );
+                    }
+                    else
                     {
                         if (ArePointsReadFromFile)
                             FileUtil.ReadCoords(out X, out Y, FileName);
-                        else if (ArePointsAnatytic)
-                        {
-                            // Anatytic func
-                            return; 
-                        }
                         Func<double, double> function = method.Estimate(X, Y);
                         graph.Build(
                             ApproximationGraphBox,
@@ -90,11 +110,12 @@ namespace gui
                             function, X, Y
                         );
                     }
-                    else
-                    {
-                        throw new ArgumentNullException("Points weren't presented");
-                    }
-                
+                }
+                else
+                {
+                    throw new ArgumentNullException("Points weren't presented");
+                }
+
             }
         }
 
@@ -134,27 +155,48 @@ namespace gui
 
         private bool IsOnlyNumbersAndDot(TextBox field)
         {
-            return System.Text.RegularExpressions.Regex.IsMatch(field.Text, "[^0-9.]");
+            if (field.Text == "") return false;
+            return System.Text.RegularExpressions.Regex.IsMatch(field.Text, "[^0-9.+-]");
         }
 
         private void GenerateButton_Click(object sender, EventArgs e)
         {
-            double a = Convert.ToDouble(GenerateFromField.Text);
-            double b = Convert.ToDouble(GenerateToField.Text);
-            int n = Convert.ToInt32(GeneratePointAmountField.Text);
-
-            X = new double[n];
-            Y = new double[n];
-            Random random = new Random();
-            for (int i = 0; i < n; i++)
+            if (ValidateInput())
             {
-                X[i] = random.NextDouble() * (b - a) + a;
-                Y[i] = random.NextDouble() * (b - a) + a;
+                double a = Convert.ToDouble(GenerateFromField.Text);
+                double b = Convert.ToDouble(GenerateToField.Text);
+                int n = Convert.ToInt32(GeneratePointAmountField.Text);
+
+                X = new double[n];
+                Y = new double[n];
+                if (ArePointsAnalytic)
+                {
+                    if (AnalyticFunctionsCombo.SelectedIndex == 0)
+                    {
+                        MessageBox.Show("Select Analytic Function cannot be empty!", "Error!", MessageBoxButtons.OK);
+                        return;
+                    }
+                    AnalyticFunction = AnalyticFunctions[AnalyticFunctionsCombo.SelectedIndex];
+                    double step = (b - a) / n;
+                    for (int i = 0; i < n; i++)
+                    {
+                        X[i] = a + i * step;
+                        Y[i] = AnalyticFunction(X[i]);
+                    }
+                }
+                else
+                {
+                    Random random = new Random();
+                    for (int i = 0; i < n; i++)
+                    {
+                        X[i] = random.NextDouble() * (b - a) + a;
+                        Y[i] = random.NextDouble() * (b - a) + a;
+                    }
+                }
+                ArePointsReady = true;
             }
-            ArePointsReady = true;
         }
 
-        // todo: implement reading of points from file
         private void ReadPointsFromFileButton_Click(object sender, EventArgs e)
         {
             ArePointsReadFromFile = true;
@@ -167,6 +209,14 @@ namespace gui
 
         private void GeneratePointsRadio_CheckedChanged(object sender, EventArgs e)
         {
+            ArePointsReadFromFile = false;
+            ArePointsAnalytic = false;
+        }
+
+        private void AnalyticFunctionRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            AnalyticFunctionsCombo.Visible = !AnalyticFunctionsCombo.Visible;
+            ArePointsAnalytic = true;
             ArePointsReadFromFile = false;
         }
     }

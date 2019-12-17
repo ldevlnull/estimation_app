@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.SettingsBox = new System.Windows.Forms.GroupBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.PointsAmountLabel = new System.Windows.Forms.Label();
             this.RightBorderLabel = new System.Windows.Forms.Label();
             this.LeftBorderLabel = new System.Windows.Forms.Label();
@@ -39,6 +38,7 @@
             this.LeftBorderField = new System.Windows.Forms.TextBox();
             this.SelectMethodField = new System.Windows.Forms.ComboBox();
             this.PointsBox = new System.Windows.Forms.GroupBox();
+            this.AnalyticFunctionRadio = new System.Windows.Forms.RadioButton();
             this.GeneratePointsAmoutLabel = new System.Windows.Forms.Label();
             this.GeneratePointAmountField = new System.Windows.Forms.TextBox();
             this.GenerateButton = new System.Windows.Forms.Button();
@@ -56,6 +56,7 @@
             this.SaveResultCheck = new System.Windows.Forms.CheckBox();
             this.ApproximateButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.AnalyticFunctionsCombo = new System.Windows.Forms.ComboBox();
             this.SettingsBox.SuspendLayout();
             this.PointsBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ApproximationGraphBox)).BeginInit();
@@ -64,7 +65,6 @@
             // 
             // SettingsBox
             // 
-            this.SettingsBox.Controls.Add(this.richTextBox1);
             this.SettingsBox.Controls.Add(this.PointsAmountLabel);
             this.SettingsBox.Controls.Add(this.RightBorderLabel);
             this.SettingsBox.Controls.Add(this.LeftBorderLabel);
@@ -78,14 +78,6 @@
             this.SettingsBox.TabIndex = 0;
             this.SettingsBox.TabStop = false;
             this.SettingsBox.Text = "Settings";
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(85, 222);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(100, 96);
-            this.richTextBox1.TabIndex = 8;
-            this.richTextBox1.Text = "TODO:\nadd settings\nfor graph setup\n";
             // 
             // PointsAmountLabel
             // 
@@ -154,6 +146,8 @@
             // 
             // PointsBox
             // 
+            this.PointsBox.Controls.Add(this.AnalyticFunctionsCombo);
+            this.PointsBox.Controls.Add(this.AnalyticFunctionRadio);
             this.PointsBox.Controls.Add(this.GeneratePointsAmoutLabel);
             this.PointsBox.Controls.Add(this.GeneratePointAmountField);
             this.PointsBox.Controls.Add(this.GenerateButton);
@@ -166,15 +160,26 @@
             this.PointsBox.Controls.Add(this.GeneratePointsRadio);
             this.PointsBox.Location = new System.Drawing.Point(18, 411);
             this.PointsBox.Name = "PointsBox";
-            this.PointsBox.Size = new System.Drawing.Size(257, 171);
+            this.PointsBox.Size = new System.Drawing.Size(257, 197);
             this.PointsBox.TabIndex = 1;
             this.PointsBox.TabStop = false;
             this.PointsBox.Text = "Points";
             // 
+            // AnalyticFunctionRadio
+            // 
+            this.AnalyticFunctionRadio.AutoSize = true;
+            this.AnalyticFunctionRadio.Location = new System.Drawing.Point(12, 42);
+            this.AnalyticFunctionRadio.Name = "AnalyticFunctionRadio";
+            this.AnalyticFunctionRadio.Size = new System.Drawing.Size(106, 17);
+            this.AnalyticFunctionRadio.TabIndex = 9;
+            this.AnalyticFunctionRadio.Text = "Analytic Function";
+            this.AnalyticFunctionRadio.UseVisualStyleBackColor = true;
+            this.AnalyticFunctionRadio.CheckedChanged += new System.EventHandler(this.AnalyticFunctionRadio_CheckedChanged);
+            // 
             // GeneratePointsAmoutLabel
             // 
             this.GeneratePointsAmoutLabel.AutoSize = true;
-            this.GeneratePointsAmoutLabel.Location = new System.Drawing.Point(54, 112);
+            this.GeneratePointsAmoutLabel.Location = new System.Drawing.Point(56, 136);
             this.GeneratePointsAmoutLabel.Name = "GeneratePointsAmoutLabel";
             this.GeneratePointsAmoutLabel.Size = new System.Drawing.Size(75, 13);
             this.GeneratePointsAmoutLabel.TabIndex = 8;
@@ -183,7 +188,7 @@
             // 
             // GeneratePointAmountField
             // 
-            this.GeneratePointAmountField.Location = new System.Drawing.Point(135, 109);
+            this.GeneratePointAmountField.Location = new System.Drawing.Point(137, 133);
             this.GeneratePointAmountField.Name = "GeneratePointAmountField";
             this.GeneratePointAmountField.Size = new System.Drawing.Size(63, 20);
             this.GeneratePointAmountField.TabIndex = 8;
@@ -191,9 +196,9 @@
             // 
             // GenerateButton
             // 
-            this.GenerateButton.Location = new System.Drawing.Point(39, 135);
+            this.GenerateButton.Location = new System.Drawing.Point(37, 159);
             this.GenerateButton.Name = "GenerateButton";
-            this.GenerateButton.Size = new System.Drawing.Size(181, 23);
+            this.GenerateButton.Size = new System.Drawing.Size(183, 23);
             this.GenerateButton.TabIndex = 7;
             this.GenerateButton.Text = "Generate";
             this.GenerateButton.UseVisualStyleBackColor = true;
@@ -203,7 +208,7 @@
             // GenerateRangeLabel
             // 
             this.GenerateRangeLabel.AutoSize = true;
-            this.GenerateRangeLabel.Location = new System.Drawing.Point(69, 61);
+            this.GenerateRangeLabel.Location = new System.Drawing.Point(71, 85);
             this.GenerateRangeLabel.Name = "GenerateRangeLabel";
             this.GenerateRangeLabel.Size = new System.Drawing.Size(129, 13);
             this.GenerateRangeLabel.TabIndex = 6;
@@ -212,7 +217,7 @@
             // 
             // GenerateToField
             // 
-            this.GenerateToField.Location = new System.Drawing.Point(135, 81);
+            this.GenerateToField.Location = new System.Drawing.Point(137, 105);
             this.GenerateToField.Name = "GenerateToField";
             this.GenerateToField.Size = new System.Drawing.Size(63, 20);
             this.GenerateToField.TabIndex = 5;
@@ -220,7 +225,7 @@
             // 
             // GenerateFromField
             // 
-            this.GenerateFromField.Location = new System.Drawing.Point(51, 81);
+            this.GenerateFromField.Location = new System.Drawing.Point(53, 105);
             this.GenerateFromField.Name = "GenerateFromField";
             this.GenerateFromField.Size = new System.Drawing.Size(63, 20);
             this.GenerateFromField.TabIndex = 4;
@@ -229,7 +234,7 @@
             // ReadPointsFromFileLabel
             // 
             this.ReadPointsFromFileLabel.AutoSize = true;
-            this.ReadPointsFromFileLabel.Location = new System.Drawing.Point(69, 90);
+            this.ReadPointsFromFileLabel.Location = new System.Drawing.Point(71, 114);
             this.ReadPointsFromFileLabel.Name = "ReadPointsFromFileLabel";
             this.ReadPointsFromFileLabel.Size = new System.Drawing.Size(110, 13);
             this.ReadPointsFromFileLabel.TabIndex = 3;
@@ -237,7 +242,7 @@
             // 
             // ReadPointsFromFileButton
             // 
-            this.ReadPointsFromFileButton.Location = new System.Drawing.Point(37, 106);
+            this.ReadPointsFromFileButton.Location = new System.Drawing.Point(37, 131);
             this.ReadPointsFromFileButton.Name = "ReadPointsFromFileButton";
             this.ReadPointsFromFileButton.Size = new System.Drawing.Size(183, 23);
             this.ReadPointsFromFileButton.TabIndex = 2;
@@ -249,7 +254,7 @@
             // 
             this.InputPointsRadio.AutoSize = true;
             this.InputPointsRadio.Checked = true;
-            this.InputPointsRadio.Location = new System.Drawing.Point(37, 29);
+            this.InputPointsRadio.Location = new System.Drawing.Point(12, 19);
             this.InputPointsRadio.Name = "InputPointsRadio";
             this.InputPointsRadio.Size = new System.Drawing.Size(81, 17);
             this.InputPointsRadio.TabIndex = 1;
@@ -261,7 +266,7 @@
             // GeneratePointsRadio
             // 
             this.GeneratePointsRadio.AutoSize = true;
-            this.GeneratePointsRadio.Location = new System.Drawing.Point(119, 29);
+            this.GeneratePointsRadio.Location = new System.Drawing.Point(99, 19);
             this.GeneratePointsRadio.Name = "GeneratePointsRadio";
             this.GeneratePointsRadio.Size = new System.Drawing.Size(101, 17);
             this.GeneratePointsRadio.TabIndex = 0;
@@ -331,11 +336,27 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // AnalyticFunctionsCombo
+            // 
+            this.AnalyticFunctionsCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AnalyticFunctionsCombo.FormattingEnabled = true;
+            this.AnalyticFunctionsCombo.Items.AddRange(new object[] {
+            "Choose analytic function",
+            "2 * cos(x)",
+            "sin(x)",
+            "exp(x)",
+            "1 / (1 + x^2)"});
+            this.AnalyticFunctionsCombo.Location = new System.Drawing.Point(39, 61);
+            this.AnalyticFunctionsCombo.Name = "AnalyticFunctionsCombo";
+            this.AnalyticFunctionsCombo.Size = new System.Drawing.Size(181, 21);
+            this.AnalyticFunctionsCombo.TabIndex = 1;
+            this.AnalyticFunctionsCombo.Visible = false;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 761);
+            this.ClientSize = new System.Drawing.Size(1184, 749);
             this.Controls.Add(this.ApproximateButton);
             this.Controls.Add(this.SaveResultCheck);
             this.Controls.Add(this.ApproximationErrorLabel);
@@ -379,13 +400,14 @@
         private System.Windows.Forms.PictureBox ErrorGraphBox;
         private System.Windows.Forms.Label ApproximationResultLabel;
         private System.Windows.Forms.Label ApproximationErrorLabel;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.CheckBox SaveResultCheck;
         private System.Windows.Forms.Button ApproximateButton;
         private System.Windows.Forms.Label GeneratePointsAmoutLabel;
         private System.Windows.Forms.TextBox GeneratePointAmountField;
         private System.Windows.Forms.Button GenerateButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.RadioButton AnalyticFunctionRadio;
+        private System.Windows.Forms.ComboBox AnalyticFunctionsCombo;
     }
 }
 

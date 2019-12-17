@@ -21,14 +21,14 @@ namespace gui
             using (StreamReader sw = new StreamReader(fileName))
             {
                 int size = File.ReadAllLines(fileName).Length;
-                string str = "";
+                string[] coordsStr = null;
                 x = new double[size];
                 y = new double[size];
                 for (int i = 0; i < size; i++)
                 {
-                    str = sw.ReadLine();
-                    x[i] = Convert.ToDouble(str.Substring(0, str.IndexOf(' ') + 1));
-                    y[i] = Convert.ToDouble(str.Substring(str.IndexOf(' ')));
+                    coordsStr = sw.ReadLine().Split(' ');
+                    x[i] = Convert.ToDouble(coordsStr[0]);
+                    y[i] = Convert.ToDouble(coordsStr[1]);
                 }
             }
         }

@@ -14,19 +14,20 @@ namespace gui
     {
         private bool SelectedInit = true;
         private bool ArePointsReady = false;
-        private bool ReadPointsFrom = false;
+        private bool ArePointsReadFromFile = false;
+        private bool ArePointsAnatytic = false;
 
         private string FileName;
 
         private double[] X;
         private double[] Y;
 
-        private IGraph graph; // todo
+        private IGraph graph = new Graph(); 
 
         private IEstimationMethod[] estimationMethods = {
             null,
-            null, // todo: Cub Splines  
-            null, // todo: Factorial
+            new Splain(),  
+            new Factorial(), 
             new LagrangePolynomial(),
             new Linear_LSM(),
             new NewtonInterpolation()
@@ -57,7 +58,7 @@ namespace gui
 
         private void SelectMethodField_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!SelectedInit && SelectMethodField.SelectedIndex == 0)
+            if (!SelectedInit && SelectMethodField.SelectedIndex == 0)
             {
                 SelectMethodField.SelectedIndex = 1;
             }
@@ -69,32 +70,31 @@ namespace gui
             int Selected = SelectMethodField.SelectedIndex;
             if (ValidateInput())
             {
-                if (Selected == 1 || Selected == 2)
-                {
-                    throw new NotImplementedException();
-                }
-                else
-                {
                     IEstimationMethod method = estimationMethods[Selected];
-                    if(ArePointsReady)
+                    if (ArePointsReady)
                     {
+                        if (ArePointsReadFromFile)
+                            FileUtil.ReadCoords(out X, out Y, FileName);
+                        else if (ArePointsAnatytic)
+                        {
+                            // Anatytic func
+                            return; 
+                        }
                         Func<double, double> function = method.Estimate(X, Y);
-                        if (ReadPointsFrom)
-                        {
-                            FileUtil.ReadCoords(out double[] x, out double[] y, FileName);
-                            graph.Build(ApproximationGraphBox, ErrorGraphBox, Convert.ToDouble(LeftBorderField.Text), Convert.ToDouble(RightBorderField.Text), Convert.ToInt32(PointsAmountField.Text), function, x, y);
-                        }
-                        else
-                        {
-                            // Something without files
-                            // graph.Build();
-                        }
-                    } 
+                        graph.Build(
+                            ApproximationGraphBox,
+                            ErrorGraphBox,
+                            Convert.ToDouble(LeftBorderField.Text),
+                            Convert.ToDouble(RightBorderField.Text),
+                            Convert.ToInt32(PointsAmountField.Text),
+                            function, X, Y
+                        );
+                    }
                     else
                     {
                         throw new ArgumentNullException("Points weren't presented");
                     }
-                }
+                
             }
         }
 
@@ -143,10 +143,10 @@ namespace gui
             double b = Convert.ToDouble(GenerateToField.Text);
             int n = Convert.ToInt32(GeneratePointAmountField.Text);
 
-            double []X = new double[n];
-
+            X = new double[n];
+            Y = new double[n];
             Random random = new Random();
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 X[i] = random.NextDouble() * (b - a) + a;
                 Y[i] = random.NextDouble() * (b - a) + a;
@@ -157,7 +157,7 @@ namespace gui
         // todo: implement reading of points from file
         private void ReadPointsFromFileButton_Click(object sender, EventArgs e)
         {
-            ReadPointsFrom = true;
+            ArePointsReadFromFile = true;
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 FileName = openFileDialog1.FileName;
@@ -167,7 +167,7 @@ namespace gui
 
         private void GeneratePointsRadio_CheckedChanged(object sender, EventArgs e)
         {
-            ReadPointsFrom = false;
+            ArePointsReadFromFile = false;
         }
     }
 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.SettingsBox = new System.Windows.Forms.GroupBox();
             this.PointsAmountLabel = new System.Windows.Forms.Label();
             this.RightBorderLabel = new System.Windows.Forms.Label();
@@ -38,6 +37,7 @@
             this.LeftBorderField = new System.Windows.Forms.TextBox();
             this.SelectMethodField = new System.Windows.Forms.ComboBox();
             this.PointsBox = new System.Windows.Forms.GroupBox();
+            this.AnalyticFunctionsCombo = new System.Windows.Forms.ComboBox();
             this.AnalyticFunctionRadio = new System.Windows.Forms.RadioButton();
             this.GeneratePointsAmoutLabel = new System.Windows.Forms.Label();
             this.GeneratePointAmountField = new System.Windows.Forms.TextBox();
@@ -56,7 +56,6 @@
             this.SaveResultCheck = new System.Windows.Forms.CheckBox();
             this.ApproximateButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.AnalyticFunctionsCombo = new System.Windows.Forms.ComboBox();
             this.SettingsBox.SuspendLayout();
             this.PointsBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ApproximationGraphBox)).BeginInit();
@@ -165,6 +164,22 @@
             this.PointsBox.TabStop = false;
             this.PointsBox.Text = "Points";
             // 
+            // AnalyticFunctionsCombo
+            // 
+            this.AnalyticFunctionsCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AnalyticFunctionsCombo.FormattingEnabled = true;
+            this.AnalyticFunctionsCombo.Items.AddRange(new object[] {
+            "Choose analytic function",
+            "2 * cos(x)",
+            "sin(x)",
+            "exp(x)",
+            "1 / (1 + x^2)"});
+            this.AnalyticFunctionsCombo.Location = new System.Drawing.Point(39, 61);
+            this.AnalyticFunctionsCombo.Name = "AnalyticFunctionsCombo";
+            this.AnalyticFunctionsCombo.Size = new System.Drawing.Size(181, 21);
+            this.AnalyticFunctionsCombo.TabIndex = 1;
+            this.AnalyticFunctionsCombo.Visible = false;
+            // 
             // AnalyticFunctionRadio
             // 
             this.AnalyticFunctionRadio.AutoSize = true;
@@ -191,7 +206,7 @@
             this.GeneratePointAmountField.Location = new System.Drawing.Point(137, 133);
             this.GeneratePointAmountField.Name = "GeneratePointAmountField";
             this.GeneratePointAmountField.Size = new System.Drawing.Size(63, 20);
-            this.GeneratePointAmountField.TabIndex = 8;
+            this.GeneratePointAmountField.TabIndex = 6;
             this.GeneratePointAmountField.Visible = false;
             // 
             // GenerateButton
@@ -276,7 +291,6 @@
             // 
             // ApproximationGraphBox
             // 
-            this.ApproximationGraphBox.Image = ((System.Drawing.Image)(resources.GetObject("ApproximationGraphBox.Image")));
             this.ApproximationGraphBox.Location = new System.Drawing.Point(310, 62);
             this.ApproximationGraphBox.Name = "ApproximationGraphBox";
             this.ApproximationGraphBox.Size = new System.Drawing.Size(850, 300);
@@ -285,7 +299,6 @@
             // 
             // ErrorGraphBox
             // 
-            this.ErrorGraphBox.Image = ((System.Drawing.Image)(resources.GetObject("ErrorGraphBox.Image")));
             this.ErrorGraphBox.Location = new System.Drawing.Point(310, 411);
             this.ErrorGraphBox.Name = "ErrorGraphBox";
             this.ErrorGraphBox.Size = new System.Drawing.Size(850, 300);
@@ -335,22 +348,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // AnalyticFunctionsCombo
-            // 
-            this.AnalyticFunctionsCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.AnalyticFunctionsCombo.FormattingEnabled = true;
-            this.AnalyticFunctionsCombo.Items.AddRange(new object[] {
-            "Choose analytic function",
-            "2 * cos(x)",
-            "sin(x)",
-            "exp(x)",
-            "1 / (1 + x^2)"});
-            this.AnalyticFunctionsCombo.Location = new System.Drawing.Point(39, 61);
-            this.AnalyticFunctionsCombo.Name = "AnalyticFunctionsCombo";
-            this.AnalyticFunctionsCombo.Size = new System.Drawing.Size(181, 21);
-            this.AnalyticFunctionsCombo.TabIndex = 1;
-            this.AnalyticFunctionsCombo.Visible = false;
             // 
             // MainWindow
             // 

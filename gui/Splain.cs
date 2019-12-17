@@ -37,8 +37,8 @@ namespace gui
             b[N - 1] = (y[N - 1] - y[N - 2]) / h[N - 1] - (2.0 / 3.0) * h[N - 1] * c[N - 1];
             d[N - 1] = -c[N - 1] / (3 * h[N - 1]);
             return z => {
-                if (z < x.Min() || z > x.Max())
-                    throw new IndexOutOfRangeException();
+               // if (z < x.Min() || z > x.Max())
+               //     throw new IndexOutOfRangeException();
                 double minX = x.Min();
                 int index = 0;
                 double diff = z - minX;

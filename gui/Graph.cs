@@ -188,8 +188,8 @@ namespace gui
                 g.DrawString(output, new Font("Arial", 8), Brushes.Black,
                     (float)(kx * gx + zx) + i * StepX, (float)(ky * gy + zy) - L);
             }
-            g.DrawLine(pen2, L, (float)(ky * gy + zy), (float)(pbWidth - L), (float)(ky * gy + zy));
-            g.DrawLine(pen2, (float)(kx * gx + zx), L, (float)(kx * gx + zx), (float)(pbHeight - L));
+            g.DrawLine(pen2, L, (float)(ky * gy + zy), (pbWidth - L), (float)(ky * gy + zy));
+            g.DrawLine(pen2, (float)(kx * gx + zx), L, (float)(kx * gx + zx), (pbHeight - L));
         }
         void GetGraphArray(out double[] X, out double[] Y, int N, Func<double, double> function)
         {

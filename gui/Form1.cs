@@ -200,7 +200,8 @@ namespace gui
         private void ReadPointsFromFileButton_Click(object sender, EventArgs e)
         {
             ArePointsReadFromFile = true;
-
+            ArePointsAnalytic = false;
+            
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 FileName = openFileDialog1.FileName;
 

@@ -77,6 +77,8 @@ namespace gui
             for (int i = 1; i < NEst; i++)
                 gest.DrawLine(pen4, (float)(Kx * XEst[i - 1] + Zx), (float)(Ky * YEst[i - 1] + Zy),
                     (float)(Kx * XEst[i] + Zx), Convert.ToInt32(Ky * YEst[i] + Zy));
+
+            FileUtil.WriteCoords(XEst, YEst);
         }
 
         Graphics gest, gerr;

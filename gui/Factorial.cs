@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace gui
 {
-    class Factorial
+    class Factorial : IEstimationMethod
     {
         private double[] X;
         private double[] Y;
 
-        public Func<double, double> estimate(double[] x, double[] y)
+        public Func<double, double> Estimate(double[] x, double[] y)
         {
             X = x;
             Y = y;
 
-            return x => FactorialAppr(X.Length - 1, x);
+            return z => FactorialAppr(X.Length - 1, z);
         }
 
         private double factorial(int k)
